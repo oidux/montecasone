@@ -166,6 +166,22 @@
   }
   .lang-menu-foot .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--oliveto);margin-right:6px;vertical-align:1px}
 
+  /* Reservation CTA -------------------------------------------------- */
+  .cta-reserve{
+    display:inline-flex;align-items:center;gap:10px;flex:0 0 auto;
+    padding:9px 18px 9px 20px;
+    background:var(--ink);color:var(--bone);
+    font-family:"Lato",sans-serif;font-size:11px;font-weight:700;
+    text-transform:uppercase;letter-spacing:0.08em;
+    text-decoration:none;border-radius:999px;
+    border:1px solid var(--ink);
+    transition:background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
+  }
+  .cta-reserve:hover{background:var(--terra);border-color:var(--terra);color:var(--bone);transform:translateY(-1px)}
+  .cta-reserve .arr{display:inline-flex;align-items:center;justify-content:center;font-size:14px;line-height:1;transition:transform .25s ease}
+  .cta-reserve:hover .arr{transform:translate(2px,-2px)}
+  .cta-reserve.is-floating{display:none}
+
   /* HERO ------------------------------------------------------------- */
   .hero{position:relative;padding:80px 56px 96px;border-top:0;width:100vw;margin-left:calc(50% - 50vw);color:var(--bone);background-image:linear-gradient(rgba(20,16,10,0.40),rgba(20,16,10,0.62)),url('https://montecasone.com/wp-content/uploads/2025/10/Monte-Casone-Mansion-2-scaled.jpg');background-size:cover;background-position:center;background-attachment:fixed;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
   @media (max-width: 900px){ .hero{background-attachment:scroll} }
@@ -393,15 +409,28 @@
   @media (max-width: 760px){
     section{padding:72px 0}
     .page{padding:0 20px}
-    .topbar{position:static}
+    .topbar{position:relative;z-index:50}
+    .lang-menu{z-index:200}
     .topbar-inner{flex-wrap:wrap;padding:12px 20px;gap:12px}
     .tb-nav{order:3;width:100%;overflow-x:auto;gap:14px;padding-top:8px;border-top:1px solid var(--rule)}
     .tb-nav a{font-size:11px;white-space:nowrap}
     .tb-meta{display:none}
+    .tb-nav{display:none}
     .lang-switcher{margin-left:auto}
     .lang-btn{padding:6px 12px;font-size:10px}
     .lang-menu{right:0;left:auto}
     .tb-logo{height:28px}
+    .topbar .cta-reserve{display:none}
+    .cta-reserve.is-floating{
+      display:inline-flex;
+      position:fixed;left:16px;right:16px;bottom:16px;
+      justify-content:center;
+      padding:15px 22px;font-size:12px;letter-spacing:0.1em;
+      z-index:80;
+      box-shadow:0 14px 40px -10px rgba(28,18,10,0.55), 0 4px 10px rgba(28,18,10,0.18);
+    }
+    main, footer{padding-bottom:0}
+    footer{margin-bottom:84px}
     .hero{padding:48px 20px 64px}
     .hero-meta{flex-direction:column;gap:6px;margin-bottom:32px;font-size:11px}
     .hero-logo{margin:24px 0 48px}
@@ -468,6 +497,10 @@
     <div class="tb-meta">
       <span>Brand Hub · v1.0</span>
     </div>
+    <a href="https://montecasone.com" target="_blank" rel="noopener" class="cta-reserve" aria-label="Prenota un soggiorno">
+      <span>Prenota</span>
+      <span class="arr no-translate" data-no-translate aria-hidden="true">↗</span>
+    </a>
     <div class="lang-switcher no-translate" data-no-translate>
       <button class="lang-btn" id="langBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Cambia lingua">
         <span class="lang-globe" aria-hidden="true">
@@ -1014,7 +1047,7 @@
       <div>
         <h6>Contatto</h6>
         <p>+39 0587 63 00 91</p>
-        <p>info@montecasone.com</p>
+        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="11787f777e517c7e7f65747270627e7f743f727e7c">[email&#160;protected]</a></p>
       </div>
       <div>
         <h6>Canali</h6>
@@ -1037,10 +1070,15 @@
   </div>
 </footer>
 
-<script>
+<a href="https://montecasone.com" target="_blank" rel="noopener" class="cta-reserve is-floating" aria-label="Prenota un soggiorno">
+  <span>Prenota il tuo soggiorno</span>
+  <span class="arr no-translate" data-no-translate aria-hidden="true">↗</span>
+</a>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 (function(){
   const I18N_KEY = 'mc-lang';
-  const I18N_CACHE_KEY = 'mc-i18n-cache-v1';
+  const I18N_CACHE_KEY = 'mc-i18n-cache-v2';
   const LANG_NAMES = { it:'Italian', en:'English', fr:'French', de:'German' };
   const TRANSLATE_ROOTS = ['header.topbar','main','footer'];
   const SKIP_TAGS = new Set(['SCRIPT','STYLE','NOSCRIPT','SVG','PATH','CIRCLE']);
