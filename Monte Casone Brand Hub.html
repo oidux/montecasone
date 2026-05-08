@@ -1,0 +1,1212 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Monte Casone — Brand Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Tuscan editorial palette */
+    --bone:        oklch(96.5% 0.012 85);   /* page bg */
+    --cream:       oklch(93%   0.018 85);   /* card bg */
+    --pietra:      oklch(82%   0.022 80);   /* warm stone */
+    --ink:         oklch(22%   0.018 50);   /* near-black warm brown */
+    --ink-soft:    oklch(36%   0.020 55);
+    --muted:       oklch(52%   0.014 70);
+    --rule:        oklch(80%   0.018 75);
+    --oliveto:     oklch(45%   0.060 130);  /* olive grove green */
+    --oliveto-2:   oklch(58%   0.058 125);
+    --terra:       oklch(52%   0.110  45);  /* terracotta */
+    --vino:        oklch(33%   0.080  25);  /* brunello red-brown */
+    --gold:        oklch(72%   0.085  82);  /* tuscan sun */
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bone);
+    color:var(--ink);
+    font-family:"Lato",ui-sans-serif,system-ui,sans-serif;
+    font-weight:400;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  ::selection{background:var(--oliveto);color:var(--bone)}
+
+  /* Typography ------------------------------------------------------- */
+  .display{font-family:"Cormorant Garamond",serif;font-weight:500;line-height:0.98}
+  .italic{font-style:italic}
+  .mono{font-family:"Lato",sans-serif;font-weight:700;font-size:11px;text-transform:uppercase}
+  .eyebrow{font-family:"Lato",sans-serif;font-weight:700;font-size:11px;text-transform:uppercase;color:var(--muted)}
+  .hairline{border:0;border-top:1px solid var(--rule);margin:0}
+
+  /* Layout ----------------------------------------------------------- */
+  .page{max-width:1440px;margin:0 auto;padding:0 56px}
+  section{padding:120px 0;border-top:1px solid var(--rule)}
+  section:first-of-type{border-top:0}
+  .grid{display:grid;gap:32px}
+  .col-12{grid-template-columns:repeat(12,1fr)}
+  .col-6{grid-template-columns:repeat(6,1fr)}
+  .col-4{grid-template-columns:repeat(4,1fr)}
+  .col-3{grid-template-columns:repeat(3,1fr)}
+  .col-2{grid-template-columns:repeat(2,1fr)}
+
+  /* Topbar ----------------------------------------------------------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:color-mix(in oklch, var(--bone) 85%, transparent);
+    backdrop-filter: blur(12px);
+    border-bottom:1px solid var(--rule);
+  }
+  .topbar-inner{
+    max-width:1440px;margin:0 auto;padding:14px 56px;
+    display:flex;align-items:center;gap:32px;
+  }
+  .tb-mark{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+  .tb-mark .tb-logo{height:22px;width:auto;display:block}
+  .tb-nav{display:flex;gap:24px;flex:1;justify-content:center}
+  .tb-nav a{color:var(--ink-soft);text-decoration:none;font-size:13px;}
+  .tb-nav a:hover{color:var(--ink)}
+  .tb-meta{display:flex;gap:16px;align-items:center;color:var(--muted);font-size:11px;text-transform:uppercase;font-family:"Lato",sans-serif}
+  .pill{
+    border:1px solid var(--ink);padding:6px 12px;border-radius:999px;
+    font-family:"Lato",sans-serif;font-size:10px;text-transform:uppercase;color:var(--ink)
+  }
+
+  /* Language switcher ------------------------------------------------ */
+  .lang-switcher{position:relative;flex:0 0 auto}
+  .lang-btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:7px 14px 7px 12px;
+    background:transparent;
+    border:1px solid var(--ink);
+    border-radius:999px;
+    font-family:"Lato",sans-serif;font-size:11px;font-weight:700;
+    text-transform:uppercase;letter-spacing:0.04em;
+    color:var(--ink);cursor:pointer;
+    transition:background .25s ease, color .25s ease, border-color .25s ease;
+  }
+  .lang-btn:hover{background:var(--ink);color:var(--bone);border-color:var(--ink)}
+  .lang-btn .lang-globe{display:flex;align-items:center;justify-content:center;width:14px;height:14px;color:currentColor}
+  .lang-btn .lang-globe svg{display:block;width:14px;height:14px}
+  .lang-btn .lang-code{display:inline-block;min-width:14px;text-align:center}
+  .lang-btn .lang-arrow{display:inline-block;font-size:8px;opacity:0.55;transform:translateY(-1px);transition:transform .25s ease}
+  .lang-btn[aria-expanded="true"]{background:var(--ink);color:var(--bone);border-color:var(--ink)}
+  .lang-btn[aria-expanded="true"] .lang-arrow{transform:translateY(-1px) rotate(180deg)}
+  .lang-btn.is-loading{pointer-events:none;opacity:0.7}
+  .lang-btn.is-loading .lang-globe{animation:lang-spin 1s linear infinite}
+  @keyframes lang-spin{to{transform:rotate(360deg)}}
+
+  .lang-menu{
+    position:absolute;top:calc(100% + 12px);right:0;min-width:268px;
+    background:var(--cream);
+    border:1px solid var(--ink);
+    box-shadow:0 32px 72px -16px rgba(28,18,10,0.32), 0 6px 16px rgba(28,18,10,0.08);
+    padding:0;z-index:60;
+    opacity:0;transform:translateY(-6px) scale(0.985);transform-origin:top right;
+    pointer-events:none;
+    transition:opacity .22s ease, transform .22s cubic-bezier(.2,.8,.2,1);
+  }
+  .lang-menu.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  .lang-menu-head{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:14px 18px 11px;border-bottom:1px solid var(--rule);
+    font-family:"Lato",sans-serif;font-size:9px;font-weight:700;
+    text-transform:uppercase;letter-spacing:0.18em;color:var(--muted);
+  }
+  .lang-menu-head .lh-mark{
+    font-family:"Cormorant Garamond",serif;font-style:italic;font-weight:500;
+    font-size:14px;text-transform:none;letter-spacing:0;color:var(--ink-soft);
+  }
+  .lang-menu button[data-lang]{
+    position:relative;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;
+    width:100%;padding:14px 18px;
+    background:transparent;border:0;border-radius:0;cursor:pointer;
+    text-align:left;color:var(--ink);
+    transition:background .2s ease, color .2s ease, padding-left .22s cubic-bezier(.2,.8,.2,1);
+  }
+  .lang-menu button[data-lang] + button[data-lang]{border-top:1px solid var(--rule)}
+  .lang-menu button[data-lang] .num{
+    font-family:"Lato",sans-serif;font-size:9px;font-weight:700;
+    color:var(--muted);letter-spacing:0.14em;width:18px;
+    transition:color .2s ease;
+  }
+  .lang-menu button[data-lang] .nm{
+    font-family:"Cormorant Garamond",serif;font-style:italic;font-weight:500;
+    font-size:22px;line-height:1;
+  }
+  .lang-menu button[data-lang] .cd{
+    font-family:"Lato",sans-serif;font-size:10px;font-weight:700;
+    text-transform:uppercase;letter-spacing:0.16em;color:var(--muted);
+    padding:4px 9px;border:1px solid var(--rule);border-radius:2px;
+    transition:color .2s ease, border-color .2s ease, background .2s ease;
+  }
+  .lang-menu button[data-lang]:hover{background:var(--bone);padding-left:26px}
+  .lang-menu button[data-lang]:hover .num{color:var(--terra)}
+  .lang-menu button[data-lang]:hover .cd{color:var(--ink);border-color:var(--ink)}
+  .lang-menu button[data-lang][aria-current="true"]{background:var(--ink);color:var(--bone)}
+  .lang-menu button[data-lang][aria-current="true"]::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--terra);
+  }
+  .lang-menu button[data-lang][aria-current="true"] .num{color:var(--gold)}
+  .lang-menu button[data-lang][aria-current="true"] .nm{color:var(--bone)}
+  .lang-menu button[data-lang][aria-current="true"] .cd{
+    color:var(--bone);border-color:rgba(246,244,239,0.35);background:rgba(246,244,239,0.06);
+  }
+  .lang-menu-foot{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:10px 18px;border-top:1px solid var(--rule);
+    font-family:"Lato",sans-serif;font-size:9px;font-weight:700;
+    text-transform:uppercase;letter-spacing:0.16em;color:var(--muted);
+  }
+  .lang-menu-foot .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--oliveto);margin-right:6px;vertical-align:1px}
+
+  /* HERO ------------------------------------------------------------- */
+  .hero{position:relative;padding:80px 56px 96px;border-top:0;width:100vw;margin-left:calc(50% - 50vw);color:var(--bone);background-image:linear-gradient(rgba(20,16,10,0.40),rgba(20,16,10,0.62)),url('https://montecasone.com/wp-content/uploads/2025/10/Monte-Casone-Mansion-2-scaled.jpg');background-size:cover;background-position:center;background-attachment:fixed;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+  @media (max-width: 900px){ .hero{background-attachment:scroll} }
+  .hero-meta.mono{color:rgba(255,255,255,0.75)!important}
+  .hero-logo{margin:48px 0 80px;display:flex;justify-content:center}
+  .hero-logo img{width:100%;max-width:1280px;height:auto;display:block;filter:drop-shadow(0 4px 32px rgba(0,0,0,0.45))}
+  .hero .hero-sub .blk h4{color:rgba(255,255,255,0.7)!important}
+  .hero .hero-sub .blk p{color:rgba(255,255,255,0.92)!important}
+  .hero .hero-sub{border-top-color:rgba(255,255,255,0.25)!important}
+  .hero-image-row{display:none}
+  .hero-meta{display:flex;justify-content:space-between;color:var(--muted);margin-bottom:64px}
+  .hero-stack{display:flex;flex-direction:column;gap:24px}
+  .hero-title{font-size:clamp(96px, 14vw, 220px);}
+  .hero-title .amp{color:var(--terra);font-style:italic}
+  .hero-sub{
+    display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;align-items:end;margin-top:48px;
+    border-top:1px solid var(--rule);padding-top:24px;
+  }
+  .hero-sub .blk h4{margin:0 0 8px;font-size:13px;text-transform:uppercase;color:var(--muted);font-weight:500;font-family:"Lato",sans-serif}
+  .hero-sub .blk p{margin:0;font-size:15px;color:var(--ink-soft);max-width:32ch}
+
+  .hero-image-row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;margin-top:64px;height:520px}
+  .hero-image-row > div{background:var(--cream);overflow:hidden;position:relative}
+  .hero-image-row img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(0.92) contrast(1.02)}
+  .hero-tag{position:absolute;left:18px;bottom:14px;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.5);font-family:"Lato",sans-serif;font-size:10px;text-transform:uppercase}
+
+  /* Section heading -------------------------------------------------- */
+  .sec-head{display:grid;grid-template-columns:120px 1fr 360px;gap:32px;align-items:start;margin-bottom:64px}
+  .sec-head .num{font-family:"Lato",sans-serif;font-size:11px;color:var(--muted)}
+  .sec-head .ti{font-family:"Cormorant Garamond",serif;font-size:72px;line-height:0.95;font-weight:500}
+  .sec-head .ti em{font-style:italic;color:var(--oliveto)}
+  .sec-head .lede{font-size:15px;color:var(--ink-soft);max-width:42ch}
+
+  /* Manifesto -------------------------------------------------------- */
+  .manifesto{font-family:"Cormorant Garamond",serif;font-size:44px;line-height:1.18;font-weight:500;max-width:22ch}
+  .manifesto em{color:var(--terra)}
+  .manifesto-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:80px;align-items:start}
+  .pillars{display:flex;flex-direction:column;gap:0}
+  .pillar{display:grid;grid-template-columns:80px 1fr;gap:24px;padding:24px 0;border-top:1px solid var(--rule)}
+  .pillar:last-child{border-bottom:1px solid var(--rule)}
+  .pillar .k{font-family:"Lato",sans-serif;font-size:11px;color:var(--muted)}
+  .pillar .v h5{margin:0 0 6px;font-family:"Cormorant Garamond",serif;font-size:24px;font-weight:500}
+  .pillar .v p{margin:0;font-size:14px;color:var(--ink-soft)}
+
+  /* Logo system ------------------------------------------------------ */
+  .logo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .logo-tile{
+    background:var(--cream);border:1px solid var(--rule);
+    aspect-ratio:4/3;display:grid;place-items:center;position:relative;overflow:hidden;
+    padding:32px;
+  }
+  .logo-tile img{width:80%;max-width:380px;height:auto;display:block}
+  .logo-tile.dark{background:var(--ink)}
+  .logo-tile.olive{background:var(--oliveto)}
+  .logo-tile .corner{position:absolute;top:16px;left:16px;font-family:"Lato",sans-serif;font-size:10px;text-transform:uppercase;color:var(--muted)}
+  .logo-tile.dark .corner,.logo-tile.olive .corner,.logo-tile.photo .corner{color:rgba(255,255,255,0.7)}
+  @media (max-width: 700px){.logo-grid{grid-template-columns:repeat(2,1fr)}}
+
+  .download-row{display:flex;justify-content:flex-end;align-items:center;gap:16px;margin-top:32px;padding-top:24px;border-top:1px solid var(--rule)}
+  .download-row .label{font-family:"Lato",sans-serif;font-size:10px;text-transform:uppercase;color:var(--muted);margin-right:auto}
+  .btn-dl{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border:1px solid var(--ink);background:var(--ink);color:var(--bone);font-family:"Lato",sans-serif;font-size:11px;text-transform:uppercase;text-decoration:none;transition:background .2s,color .2s}
+  .btn-dl:hover{background:var(--terra);border-color:var(--terra)}
+  .btn-dl .arr{font-size:14px;line-height:1}
+  .btn-dl.ghost{background:transparent;color:var(--ink)}
+  .btn-dl.ghost:hover{background:var(--ink);color:var(--bone)}
+
+  /* Wordmark variants */
+  .wm-stack{display:flex;flex-direction:column;align-items:center;gap:6px}
+  .wm-stack .l1{font-family:"Cormorant Garamond",serif;font-size:54px;line-height:1}
+  .wm-stack .l2{font-family:"Cormorant Garamond",serif;font-size:54px;line-height:1;font-style:italic;font-weight:500}
+  .wm-stack .rule{width:48px;height:1px;background:currentColor;margin:8px 0}
+  .wm-stack .l3{font-family:"Lato",sans-serif;font-size:9px;text-transform:uppercase}
+
+  .wm-line{display:flex;align-items:center;gap:14px}
+  .wm-line .l1{font-family:"Cormorant Garamond",serif;font-size:38px;text-transform:uppercase;font-weight:500}
+  .wm-line .dot{width:6px;height:6px;background:currentColor;border-radius:99px}
+
+  .mono-mark{
+    width:140px;height:140px;border:1.5px solid currentColor;border-radius:50%;
+    display:grid;place-items:center;position:relative;
+  }
+  .mono-mark .mc{font-family:"Cormorant Garamond",serif;font-size:64px;line-height:1}
+  .mono-mark .ring{
+    position:absolute;inset:-1px;border-radius:50%;
+  }
+  .mono-mark svg{position:absolute;inset:0;width:100%;height:100%}
+
+  /* Color palette ---------------------------------------------------- */
+  .swatch{
+    aspect-ratio: 3/4;border:1px solid var(--rule);position:relative;overflow:hidden;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    padding:18px;color:var(--ink);
+  }
+  .swatch.on-dark{color:var(--bone)}
+  .swatch .name{font-family:"Cormorant Garamond",serif;font-size:24px;line-height:1;margin-bottom:6px}
+  .swatch .meta{display:flex;justify-content:space-between;font-family:"Lato",sans-serif;font-size:10px;text-transform:uppercase}
+  .swatch .num{position:absolute;top:14px;left:18px;font-family:"Lato",sans-serif;font-size:10px;}
+  .swatch .role{position:absolute;top:14px;right:18px;font-family:"Lato",sans-serif;font-size:10px;opacity:0.8}
+
+  /* Typography spec -------------------------------------------------- */
+  .type-row{display:grid;grid-template-columns:200px 1fr 200px;gap:32px;padding:32px 0;border-top:1px solid var(--rule);align-items:baseline}
+  .type-row:last-child{border-bottom:1px solid var(--rule)}
+  .type-row .label{font-family:"Lato",sans-serif;font-size:11px;text-transform:uppercase;color:var(--muted)}
+  .type-row .spec{text-align:right;font-family:"Lato",sans-serif;font-size:11px;color:var(--muted)}
+  .type-row .smp{color:var(--ink)}
+  .smp.s-1{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:88px;line-height:0.95;}
+  .smp.s-2{font-family:"Cormorant Garamond",serif;font-weight:500;font-style:italic;font-size:56px;line-height:1;}
+  .smp.s-3{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:32px;line-height:1.15}
+  .smp.s-4{font-family:"Lato",sans-serif;font-weight:400;font-size:22px;line-height:1.4;color:var(--ink-soft)}
+  .smp.s-5{font-family:"Lato",sans-serif;font-weight:400;font-size:14px;line-height:1.5;color:var(--ink-soft)}
+  .smp.s-6{font-family:"Lato",sans-serif;font-size:11px;text-transform:uppercase;color:var(--muted)}
+
+  /* Residences ------------------------------------------------------- */
+  .res-card{position:relative;background:var(--cream);border:1px solid var(--rule);overflow:hidden;display:flex;flex-direction:column}
+  .res-card .ph{aspect-ratio:4/3;overflow:hidden;background:var(--pietra)}
+  .res-card .ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s ease}
+  .res-card:hover .ph img{transform:scale(1.04)}
+  .res-card .body{padding:24px;display:flex;flex-direction:column;gap:14px}
+  .res-card .head{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+  .res-card h3{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:32px;line-height:1;margin:0}
+  .res-card .specs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;border-top:1px solid var(--rule);padding-top:14px;margin-top:6px}
+  .res-card .specs .s{display:flex;flex-direction:column;gap:2px}
+  .res-card .specs .k{font-family:"Lato",sans-serif;font-size:9.5px;text-transform:uppercase;color:var(--muted)}
+  .res-card .specs .v{font-family:"Cormorant Garamond",serif;font-size:22px;line-height:1}
+  .res-card .desc{font-size:14px;color:var(--ink-soft);margin:0}
+
+  /* Experiences ------------------------------------------------------ */
+  .exp{display:grid;grid-template-columns:120px 1fr 1fr;gap:32px;padding:36px 0;border-top:1px solid var(--rule);align-items:start}
+  .exp:last-child{border-bottom:1px solid var(--rule)}
+  .exp .num{font-family:"Lato",sans-serif;font-size:11px;color:var(--muted)}
+  .exp h4{margin:0 0 14px;font-family:"Cormorant Garamond",serif;font-weight:500;font-size:42px;line-height:1}
+  .exp h4 em{color:var(--oliveto);font-style:italic}
+  .exp p{margin:0;font-size:14.5px;color:var(--ink-soft);max-width:46ch}
+  .exp .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .exp .tg{padding:4px 10px;border:1px solid var(--rule);font-family:"Lato",sans-serif;font-size:9.5px;text-transform:uppercase;color:var(--muted);border-radius:999px}
+
+  /* Photography grid ------------------------------------------------- */
+  .gallery{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:180px;gap:8px}
+  .gallery .g{overflow:hidden;background:var(--cream)}
+  .gallery .g img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(0.95)}
+  .g.s-1{grid-column:span 7;grid-row:span 2}
+  .g.s-2{grid-column:span 5;grid-row:span 2}
+  .g.s-3{grid-column:span 4;grid-row:span 2}
+  .g.s-4{grid-column:span 4;grid-row:span 2}
+  .g.s-5{grid-column:span 4;grid-row:span 2}
+  .g.s-6{grid-column:span 5;grid-row:span 2}
+  .g.s-7{grid-column:span 7;grid-row:span 2}
+  .g.s-8{grid-column:span 6;grid-row:span 2}
+  .g.s-9{grid-column:span 6;grid-row:span 2}
+
+  .photo-rules{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px}
+  .photo-rule{padding:20px;border:1px solid var(--rule);background:var(--cream)}
+  .photo-rule .ix{font-family:"Lato",sans-serif;font-size:10px;color:var(--muted)}
+  .photo-rule h5{margin:8px 0 4px;font-family:"Cormorant Garamond",serif;font-weight:500;font-size:22px}
+  .photo-rule p{margin:0;font-size:13.5px;color:var(--ink-soft)}
+
+  /* Voice ------------------------------------------------------------ */
+  .voice-head{display:grid;grid-template-columns:80px 1fr 1fr;gap:0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:14px 0;margin-bottom:0}
+  .voice-head > div{font-family:"Lato",sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:0;color:var(--muted)}
+  .voice-head .h-do{color:var(--oliveto)}
+  .voice-head .h-dont{color:var(--vino)}
+  .voice-row{display:grid;grid-template-columns:80px 1fr 1fr;gap:0;border-bottom:1px solid var(--rule);align-items:baseline}
+  .voice-row .vn{font-family:"Lato",sans-serif;font-size:10px;color:var(--muted);padding:24px 0}
+  .voice-row .vc{font-family:"Cormorant Garamond",serif;font-weight:500;font-style:italic;font-size:24px;line-height:1.3;padding:24px 32px 24px 0;color:var(--ink)}
+  .voice-row .vc.dont{color:var(--vino);text-decoration:line-through;text-decoration-thickness:1px;text-decoration-color:rgba(122,40,40,0.4);padding-right:0;padding-left:32px;border-left:1px solid var(--rule)}
+
+  .lex{display:grid;grid-template-columns:80px 1fr 1fr;margin-top:64px;border-top:1px solid var(--rule)}
+  .lex .lex-head{grid-column:1 / -1;display:grid;grid-template-columns:80px 1fr 1fr;border-bottom:1px solid var(--rule);padding:14px 0}
+  .lex .lex-head > div{font-family:"Lato",sans-serif;font-size:10px;text-transform:uppercase;color:var(--muted)}
+  .lex .lex-head .h-do{color:var(--oliveto)}
+  .lex .lex-head .h-dont{color:var(--vino)}
+  .lex .lex-row{grid-column:1 / -1;display:grid;grid-template-columns:80px 1fr 1fr;border-bottom:1px solid var(--rule);align-items:baseline}
+  .lex .lex-row .ln{font-family:"Lato",sans-serif;font-size:10px;color:var(--muted);padding:22px 0}
+  .lex .lex-row .lw{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:26px;line-height:1.25;padding:22px 32px 22px 0;color:var(--ink)}
+  .lex .lex-row .lw.dont{color:var(--vino);opacity:0.55;padding-right:0;padding-left:32px;border-left:1px solid var(--rule)}
+  .lex .lex-row.quote .lw{font-style:italic;font-size:22px;color:var(--ink-soft)}
+  .lex .lex-row.quote .lw.dont{color:var(--vino)}
+
+  /* Geography / map -------------------------------------------------- */
+  .geo{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:stretch}
+  .geo .map{
+    aspect-ratio:4/3;border:1px solid var(--rule);position:relative;overflow:hidden;
+    background: radial-gradient(ellipse at 35% 40%, oklch(94% 0.04 95) 0%, oklch(91% 0.03 90) 40%, oklch(87% 0.025 80) 100%);
+  }
+  .geo .pin-list{display:flex;flex-direction:column}
+  .geo .pin-list .it{display:grid;grid-template-columns:36px 1fr 80px;padding:18px 0;border-top:1px solid var(--rule);align-items:baseline;gap:12px}
+  .geo .pin-list .it:last-child{border-bottom:1px solid var(--rule)}
+  .geo .pin-list .ix{font-family:"Lato",sans-serif;font-size:11px;color:var(--muted)}
+  .geo .pin-list .nm{font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:500;line-height:1}
+  .geo .pin-list .nm em{font-style:italic;color:var(--muted);font-size:14px;display:block;font-family:"Lato",sans-serif;margin-top:4px}
+  .geo .pin-list .dist{font-family:"Lato",sans-serif;font-size:11px;color:var(--ink-soft);text-align:right}
+
+  /* Footer ----------------------------------------------------------- */
+  .ft{background:var(--ink);color:var(--bone);padding:96px 0 32px;border-top:0}
+  .ft .page{padding:0 56px;max-width:1440px;margin:0 auto}
+  .ft .word{font-family:"Cormorant Garamond",serif;font-weight:500;font-size:clamp(80px,12vw,200px);line-height:0.92;margin:0 0 56px}
+  .ft .word em{font-style:italic;color:var(--gold)}
+  .ft .grid-ft{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;border-top:1px solid rgba(255,255,255,0.15);padding-top:32px}
+  .ft h6{margin:0 0 12px;font-family:"Lato",sans-serif;font-size:11px;text-transform:uppercase;color:rgba(255,255,255,0.5);font-weight:500}
+  .ft p,.ft a{font-family:"Cormorant Garamond",serif;font-size:20px;color:var(--bone);text-decoration:none;line-height:1.4;margin:0 0 4px;font-weight:500}
+  .ft .colofon{display:flex;justify-content:space-between;margin-top:48px;font-family:"Lato",sans-serif;font-size:10px;text-transform:uppercase;color:rgba(255,255,255,0.5)}
+
+  /* Misc ------------------------------------------------------------- */
+  .ph-img{width:100%;height:100%;object-fit:cover;display:block}
+  .frame{border:1px solid var(--rule)}
+  .scroll-mark{position:fixed;left:24px;bottom:24px;font-family:"Lato",sans-serif;font-size:10px;text-transform:uppercase;color:var(--muted);z-index:60;mix-blend-mode:multiply}
+
+  /* Responsive ------------------------------------------------------- */
+  @media (max-width: 1100px){
+    .page{padding:0 32px}
+    .topbar-inner{padding:14px 32px}
+    .sec-head{grid-template-columns:80px 1fr;gap:24px}
+    .sec-head .lede{grid-column:2;max-width:none}
+    .sec-head .ti{font-size:56px}
+    .manifesto-grid{grid-template-columns:1fr;gap:48px}
+    .manifesto{font-size:36px}
+    .col-12{grid-template-columns:repeat(6,1fr)}
+    .col-6{grid-template-columns:repeat(3,1fr)}
+    .col-4{grid-template-columns:repeat(2,1fr)}
+    .geo{grid-template-columns:1fr;gap:32px}
+    .photo-rules{grid-template-columns:repeat(2,1fr)}
+    .ft .grid-ft{grid-template-columns:repeat(2,1fr);gap:24px}
+    .gallery{grid-auto-rows:140px}
+  }
+  @media (max-width: 760px){
+    section{padding:72px 0}
+    .page{padding:0 20px}
+    .topbar{position:static}
+    .topbar-inner{flex-wrap:wrap;padding:12px 20px;gap:12px}
+    .tb-nav{order:3;width:100%;overflow-x:auto;gap:14px;padding-top:8px;border-top:1px solid var(--rule)}
+    .tb-nav a{font-size:11px;white-space:nowrap}
+    .tb-meta{display:none}
+    .lang-switcher{margin-left:auto}
+    .lang-btn{padding:6px 12px;font-size:10px}
+    .lang-menu{right:0;left:auto}
+    .tb-logo{height:28px}
+    .hero{padding:48px 20px 64px}
+    .hero-meta{flex-direction:column;gap:6px;margin-bottom:32px;font-size:11px}
+    .hero-logo{margin:24px 0 48px}
+    .hero-sub{grid-template-columns:1fr;gap:20px;padding-top:20px;margin-top:32px}
+    .hero-image-row{display:none}
+    .sec-head{grid-template-columns:1fr;gap:12px;margin-bottom:40px}
+    .sec-head .lede{grid-column:1;font-size:14px}
+    .sec-head .ti{font-size:40px;line-height:1.02}
+    .sec-head .num{font-size:10px}
+    .manifesto{font-size:28px}
+    .pillar{grid-template-columns:1fr;gap:8px;padding:20px 0}
+    .grid{gap:20px}
+    .col-12,.col-6,.col-4,.col-3,.col-2{grid-template-columns:1fr}
+    .col-6.swatches,.grid.col-6{grid-template-columns:repeat(2,1fr)}
+    .logo-grid{grid-template-columns:1fr}
+    .logo-tile{padding:24px}
+    .logo-tile img{width:72%}
+    .download-row{flex-direction:column;align-items:stretch;gap:12px;text-align:left}
+    .download-row .label{margin-right:0;text-align:left}
+    .btn-dl{justify-content:space-between;width:100%}
+    .type-row{grid-template-columns:1fr;gap:8px;padding:24px 0}
+    .type-row .spec{text-align:left}
+    .smp.s-1{font-size:48px}
+    .smp.s-2{font-size:34px}
+    .smp.s-3{font-size:24px}
+    .res-card .body{padding:18px}
+    .exp{grid-template-columns:1fr;gap:14px;padding:24px 0}
+    .exp h4{font-size:32px}
+    .gallery{grid-template-columns:repeat(2,1fr);grid-auto-rows:120px;gap:6px}
+    .g.s-1,.g.s-2,.g.s-3,.g.s-4,.g.s-5,.g.s-6,.g.s-7,.g.s-8,.g.s-9{grid-column:span 1;grid-row:span 1}
+    .g.s-1{grid-column:span 2;grid-row:span 2}
+    .photo-rules{grid-template-columns:1fr;gap:12px}
+    .voice-head,.voice-row,.lex,.lex .lex-head,.lex .lex-row{grid-template-columns:32px 1fr}
+    .voice-row .vc.dont,.lex .lex-row .lw.dont{grid-column:1 / -1;border-left:0;border-top:1px solid var(--rule);padding:16px 0 16px 32px;margin-top:0}
+    .voice-row .vc,.lex .lex-row .lw{padding:16px 0;font-size:18px}
+    .lex .lex-row .lw{font-size:20px}
+    .voice-head .h-dont,.lex .lex-head .h-dont{display:none}
+    .ft{padding:64px 0 24px}
+    .ft .word{font-size:64px;margin-bottom:32px}
+    .ft .grid-ft{grid-template-columns:1fr;gap:20px}
+    .ft p,.ft a{font-size:16px}
+    .ft .colofon{flex-direction:column;gap:8px;margin-top:32px;text-align:left}
+    .scroll-mark{display:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="tb-mark">
+      <img src="assets/logo-brown.svg" alt="Monte Casone" class="tb-logo"/>
+    </div>
+    <nav class="tb-nav">
+      <a href="#essence">Essenza</a>
+      <a href="#identity">Identità</a>
+      <a href="#palette">Palette</a>
+      <a href="#type">Tipografia</a>
+      <a href="#residenze">Residenze</a>
+      <a href="#esperienze">Esperienze</a>
+      <a href="#voce">Voce</a>
+    </nav>
+    <div class="tb-meta">
+      <span>Brand Hub · v1.0</span>
+    </div>
+    <div class="lang-switcher no-translate" data-no-translate>
+      <button class="lang-btn" id="langBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Cambia lingua">
+        <span class="lang-globe" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M3 12h18"/>
+            <path d="M12 3c2.6 2.7 4 6 4 9s-1.4 6.3-4 9c-2.6-2.7-4-6-4-9s1.4-6.3 4-9z"/>
+          </svg>
+        </span>
+        <span class="lang-code" id="langCode">IT</span>
+        <span class="lang-arrow" aria-hidden="true">▾</span>
+      </button>
+      <div class="lang-menu" id="langMenu" role="listbox" aria-label="Lingue">
+        <div class="lang-menu-head">
+          <span>Lingua · Language</span>
+          <span class="lh-mark">quattro</span>
+        </div>
+        <button type="button" data-lang="it" role="option"><span class="num">01</span><span class="nm">Italiano</span><span class="cd">IT</span></button>
+        <button type="button" data-lang="en" role="option"><span class="num">02</span><span class="nm">English</span><span class="cd">EN</span></button>
+        <button type="button" data-lang="fr" role="option"><span class="num">03</span><span class="nm">Français</span><span class="cd">FR</span></button>
+        <button type="button" data-lang="de" role="option"><span class="num">04</span><span class="nm">Deutsch</span><span class="cd">DE</span></button>
+        <div class="lang-menu-foot">
+          <span><span class="dot"></span>Traduzione automatica</span>
+          <span>Monte Casone</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="scroll-mark">↓ Scorri</div>
+
+<main class="page">
+
+<!-- HERO -->
+<section class="hero" data-screen-label="01 Hero">
+  <div class="hero-meta mono">
+    <span>Brand Hub — Identità e linee guida</span>
+    <span>Ghizzano (PI) · Toscana · 43.6°N 10.6°E</span>
+    <span>IT / EN / FR / DE</span>
+  </div>
+
+  <div class="hero-logo">
+    <img src="assets/logo-white.svg" alt="Monte Casone"/>
+  </div>
+
+  <div class="hero-stack" style="display:none">
+    <div class="display hero-title">Monte<br/><span class="amp italic">Casone</span></div>
+
+    <div class="hero-sub">
+      <div class="blk">
+        <h4>Posizionamento</h4>
+        <p>Agriturismo di gran classe nel cuore della Toscana, fra Volterra e San Gimignano.</p>
+      </div>
+      <div class="blk">
+        <h4>Promessa</h4>
+        <p>Un'oasi di pace dove ritrovare il piacere lento delle giornate ben spese.</p>
+      </div>
+      <div class="blk">
+        <h4>Pubblico</h4>
+        <p>Viaggiatori esigenti che cercano un soggiorno raffinato, riservato, autenticamente toscano.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-image-row">
+    <div>
+      <img src="https://montecasone.com/wp-content/uploads/2025/10/Monte-Casone-Mansion-5-scaled.jpg" alt="Monte Casone Mansion"/>
+      <div class="hero-tag">Casa madre · vista colline</div>
+    </div>
+    <div>
+      <img src="https://montecasone.com/wp-content/uploads/2026/01/Monte_Casone_tuscan-heritage10.jpg" alt="Eredità toscana"/>
+      <div class="hero-tag">Eredità toscana</div>
+    </div>
+    <div>
+      <img src="https://montecasone.com/wp-content/uploads/2026/01/monte_casone_outside_life.jpg" alt="Vita all'aperto"/>
+      <div class="hero-tag">La vita all'aperto</div>
+    </div>
+  </div>
+</section>
+
+<!-- ESSENCE / MANIFESTO -->
+<section id="essence" data-screen-label="02 Essenza">
+  <div class="sec-head">
+    <div class="num">01 / 08</div>
+    <div class="ti">L'<em>essenza</em><br/>del marchio</div>
+    <div class="lede">Monte Casone non è un hotel. È un luogo che si abita. Una casa di campagna trasformata in agriturismo, dove l'ospitalità è una conversazione discreta fra paesaggio, materia e tempo.</div>
+  </div>
+
+  <div class="manifesto-grid">
+    <div class="manifesto">
+      Per molti, la Toscana è un <em>paradiso terrestre</em>. Una visita a Monte Casone vi convincerebbe rapidamente che è proprio così — fra ulivi secolari, terre rosse e serate indimenticabili con un buon bicchiere di Brunello.
+    </div>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="k">01 / Valore</div>
+        <div class="v">
+          <h5>Gran classe, mai ostentazione</h5>
+          <p>Lusso quieto. Materiali nobili, gesti misurati, niente di teatrale.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="k">02 / Valore</div>
+        <div class="v">
+          <h5>Cocooning toscano</h5>
+          <p>Tutti i comfort di casa, immersi nella natura delle colline pisane.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="k">03 / Valore</div>
+        <div class="v">
+          <h5>Tempo lento</h5>
+          <p>Il ritmo della vita rurale come bene più prezioso da offrire all'ospite.</p>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="k">04 / Valore</div>
+        <div class="v">
+          <h5>Eredità della terra</h5>
+          <p>Il nostro olio, le nostre piante, le nostre tradizioni — non scenografia, sostanza.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IDENTITY / LOGO SYSTEM -->
+<section id="identity" data-screen-label="03 Identita">
+  <div class="sec-head">
+    <div class="num">02 / 08</div>
+    <div class="ti">Sistema di <em>identità</em></div>
+    <div class="lede">Il marchio nasce dall'incisione di pietra: caratteri Garamond in capitello, proporzioni classiche, una lieve cesura italica come firma del luogo. Tre lockup ufficiali coprono l'intero spettro applicativo.</div>
+  </div>
+
+  <div class="logo-grid">
+    <div class="logo-tile" style="background:var(--bone)">
+      <span class="corner">A · Positivo</span>
+      <img src="assets/logo-brown.svg" alt="Monte Casone"/>
+    </div>
+    <div class="logo-tile dark">
+      <span class="corner">B · Negativo</span>
+      <img src="assets/logo-white.svg" alt="Monte Casone"/>
+    </div>
+    <div class="logo-tile">
+      <span class="corner">C · Su crema</span>
+      <img src="assets/logo-brown.svg" alt="Monte Casone"/>
+    </div>
+    <div class="logo-tile olive">
+      <span class="corner">D · Su oliveto</span>
+      <img src="assets/logo-white.svg" alt="Monte Casone"/>
+    </div>
+    <div class="logo-tile photo" style="background-image:linear-gradient(rgba(0,0,0,0.18),rgba(0,0,0,0.45)),url('https://montecasone.com/wp-content/uploads/2026/01/monte_casone_poll39.jpg');background-size:cover;background-position:center">
+      <span class="corner">E · Su fotografia</span>
+      <img src="assets/logo-white.svg" alt="Monte Casone" style="filter:drop-shadow(0 2px 14px rgba(0,0,0,.5))"/>
+    </div>
+  </div>
+
+  <div class="download-row">
+    <span class="label">File del marchio · SVG · PNG · EPS</span>
+    <a class="btn-dl" href="https://drive.google.com/drive/folders/1brtgxsF2d7HA9WiEfg4csPpHube_lKrw" target="_blank" rel="noopener">
+      <span>Scarica i file del logo</span>
+      <span class="arr">↗</span>
+    </a>
+  </div>
+
+</section>
+<section id="palette" data-screen-label="04 Palette">
+  <div class="sec-head">
+    <div class="num">03 / 08</div>
+    <div class="ti">Palette<br/>di <em>terra</em></div>
+    <div class="lede">Cinque colori estratti dal paesaggio: la pietra delle case coloniche, il verde profondo degli ulivi, il rosso dei tetti, l'oro del sole basso e l'inchiostro caldo della notte di campagna.</div>
+  </div>
+
+  <div class="grid col-6" style="gap:8px">
+    <div class="swatch" style="background:var(--bone)">
+      <span class="num">01</span><span class="role">Primary BG</span>
+      <div class="name">Osso · Bone</div>
+      <div class="meta"><span>#F1ECE2</span><span>oklch 96.5 / 0.012 / 85</span></div>
+    </div>
+    <div class="swatch on-dark" style="background:var(--ink)">
+      <span class="num">02</span><span class="role">Primary FG</span>
+      <div class="name">Inchiostro</div>
+      <div class="meta"><span>#2A2520</span><span>oklch 22 / 0.018 / 50</span></div>
+    </div>
+    <div class="swatch on-dark" style="background:var(--oliveto)">
+      <span class="num">03</span><span class="role">Accent · Eredità</span>
+      <div class="name">Oliveto</div>
+      <div class="meta"><span>#5C6A3A</span><span>oklch 45 / 0.06 / 130</span></div>
+    </div>
+    <div class="swatch on-dark" style="background:var(--terra)">
+      <span class="num">04</span><span class="role">Accent · Calore</span>
+      <div class="name">Terracotta</div>
+      <div class="meta"><span>#B86842</span><span>oklch 52 / 0.11 / 45</span></div>
+    </div>
+    <div class="swatch" style="background:var(--gold)">
+      <span class="num">05</span><span class="role">Accent · Sole</span>
+      <div class="name">Sole basso</div>
+      <div class="meta"><span>#D7B36A</span><span>oklch 72 / 0.085 / 82</span></div>
+    </div>
+    <div class="swatch on-dark" style="background:var(--vino)">
+      <span class="num">06</span><span class="role">Accent · Brunello</span>
+      <div class="name">Vino</div>
+      <div class="meta"><span>#5A2A22</span><span>oklch 33 / 0.08 / 25</span></div>
+    </div>
+  </div>
+
+  <!-- usage strip -->
+  <div class="grid col-3" style="margin-top:32px;gap:24px">
+    <div class="frame" style="padding:24px;background:var(--cream)">
+      <div class="mono" style="color:var(--muted)">Combinazione 01 · Editoriale</div>
+      <div style="display:flex;gap:6px;margin-top:14px">
+        <div style="width:60%;height:56px;background:var(--bone);border:1px solid var(--rule)"></div>
+        <div style="width:24%;height:56px;background:var(--ink)"></div>
+        <div style="width:16%;height:56px;background:var(--oliveto)"></div>
+      </div>
+      <p style="margin:14px 0 0;font-size:13px;color:var(--ink-soft)">Comunicazione istituzionale, brochure, sito.</p>
+    </div>
+    <div class="frame" style="padding:24px;background:var(--cream)">
+      <div class="mono" style="color:var(--muted)">Combinazione 02 · Stagionale</div>
+      <div style="display:flex;gap:6px;margin-top:14px">
+        <div style="width:50%;height:56px;background:var(--terra)"></div>
+        <div style="width:30%;height:56px;background:var(--bone);border:1px solid var(--rule)"></div>
+        <div style="width:20%;height:56px;background:var(--vino)"></div>
+      </div>
+      <p style="margin:14px 0 0;font-size:13px;color:var(--ink-soft)">Campagne autunnali, inviti privati, vendemmia.</p>
+    </div>
+    <div class="frame" style="padding:24px;background:var(--cream)">
+      <div class="mono" style="color:var(--muted)">Combinazione 03 · Olio nuovo</div>
+      <div style="display:flex;gap:6px;margin-top:14px">
+        <div style="width:55%;height:56px;background:var(--oliveto)"></div>
+        <div style="width:25%;height:56px;background:var(--gold)"></div>
+        <div style="width:20%;height:56px;background:var(--bone);border:1px solid var(--rule)"></div>
+      </div>
+      <p style="margin:14px 0 0;font-size:13px;color:var(--ink-soft)">Etichette olio, packaging frantoio, eventi olivicoli.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TYPOGRAPHY -->
+<section id="type" data-screen-label="05 Tipografia">
+  <div class="sec-head">
+    <div class="num">04 / 08</div>
+    <div class="ti">Tipografia<br/><em>Cormorant &amp; Lato</em></div>
+    <div class="lede">Due famiglie, tutto qui. Cormorant Garamond per la voce — titoli scolpiti, corsivi morbidi, occhio aperto. Lato per il corpo — neutra, leggibile, mai protagonista. Le eyebrow sono Lato Bold maiuscolo con tracking allargato.</div>
+  </div>
+
+  <div>
+    <div class="type-row">
+      <div class="label">Display · 01</div>
+      <div class="smp s-1">La Dolce Vita</div>
+      <div class="spec">Cormorant Garamond · Light · 88 / 84</div>
+    </div>
+    <div class="type-row">
+      <div class="label">Display · 02</div>
+      <div class="smp s-2">paradiso terrestre</div>
+      <div class="spec">Cormorant Garamond · Italic · 56 / 56</div>
+    </div>
+    <div class="type-row">
+      <div class="label">Heading</div>
+      <div class="smp s-3">Il luogo ideale per godersi la vita</div>
+      <div class="spec">Cormorant Garamond · Regular · 32 / 38</div>
+    </div>
+    <div class="type-row">
+      <div class="label">Lede</div>
+      <div class="smp s-4">A due passi da Volterra e San Gimignano, Monte Casone è una vera oasi di pace, con una vista degna delle più belle cartoline.</div>
+      <div class="spec">Lato · Regular · 22 / 31</div>
+    </div>
+    <div class="type-row">
+      <div class="label">Body</div>
+      <div class="smp s-5">Tre cottage di lusso sono stati progettati e attrezzati per offrirti un'esperienza incredibile di "cocooning": tutti i comfort di casa tua nel mezzo delle colline toscane.</div>
+      <div class="spec">Lato · Regular · 14 / 21</div>
+    </div>
+    <div class="type-row">
+      <div class="label">Eyebrow / Spec</div>
+      <div class="smp s-6">Agriturismo · di gran classe · Toscana</div>
+      <div class="spec">Lato · Bold · 11 · tracking 0.22</div>
+    </div>
+  </div>
+
+  <div class="download-row">
+    <span class="label">Famiglie tipografiche · Google Fonts · gratuito</span>
+    <a class="btn-dl ghost" href="https://fonts.google.com/specimen/Cormorant+Garamond" target="_blank" rel="noopener">
+      <span>Cormorant Garamond</span>
+      <span class="arr">↗</span>
+    </a>
+    <a class="btn-dl" href="https://fonts.google.com/specimen/Lato" target="_blank" rel="noopener">
+      <span>Lato</span>
+      <span class="arr">↗</span>
+    </a>
+  </div>
+</section>
+
+<!-- RESIDENCES -->
+<section id="residenze" data-screen-label="06 Residenze">
+  <div class="sec-head">
+    <div class="num">05 / 08</div>
+    <div class="ti">Tre <em>residenze</em>,<br/>una stessa casa</div>
+    <div class="lede">Ogni cottage prende il nome da una varietà di olivo che cresce sulle nostre colline: Pendolino, Frantoio, Moraiolo. Tre architetture distinte, una sola filosofia di abitazione.</div>
+  </div>
+
+  <div class="grid col-3">
+    <article class="res-card">
+      <div class="ph"><img src="https://montecasone.com/wp-content/uploads/2026/01/pendolino-outside.jpg" alt="Villa Pendolino"/></div>
+      <div class="body">
+        <div class="head">
+          <h3>Villa Pendolino</h3>
+          <span class="mono" style="color:var(--terra)">A · Esclusiva</span>
+        </div>
+        <p class="desc">Stile toscano-moderno, patio privato e barbecue, viste mozzafiato sulle colline di Ghizzano.</p>
+        <div class="specs">
+          <div class="s"><span class="k">Ospiti</span><span class="v">8</span></div>
+          <div class="s"><span class="k">Interno</span><span class="v">201 m²</span></div>
+          <div class="s"><span class="k">Patio</span><span class="v">145 m²</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="res-card">
+      <div class="ph"><img src="https://montecasone.com/wp-content/uploads/2026/01/monte_casone_frantoio-outside-1.jpg" alt="Cottage Frantoio"/></div>
+      <div class="body">
+        <div class="head">
+          <h3>Cottage Frantoio</h3>
+          <span class="mono" style="color:var(--oliveto)">B · Casa madre</span>
+        </div>
+        <p class="desc">Al piano terra dell'edificio principale dell'agriturismo. Continuità con il cuore storico della tenuta.</p>
+        <div class="specs">
+          <div class="s"><span class="k">Ospiti</span><span class="v">4</span></div>
+          <div class="s"><span class="k">Interno</span><span class="v">104 m²</span></div>
+          <div class="s"><span class="k">Patio</span><span class="v">70 m²</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="res-card">
+      <div class="ph"><img src="https://montecasone.com/wp-content/uploads/2026/01/moraioilo-outside.jpg" alt="Cottage Moraiolo"/></div>
+      <div class="body">
+        <div class="head">
+          <h3>Cottage Moraiolo</h3>
+          <span class="mono" style="color:var(--vino)">C · Fienile</span>
+        </div>
+        <p class="desc">Antico fienile ristrutturato, separato dall'edificio principale, vista aperta sulle colline.</p>
+        <div class="specs">
+          <div class="s"><span class="k">Ospiti</span><span class="v">4</span></div>
+          <div class="s"><span class="k">Interno</span><span class="v">98 m²</span></div>
+          <div class="s"><span class="k">Patio</span><span class="v">45 m²</span></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- EXPERIENCES -->
+<section id="esperienze" data-screen-label="07 Esperienze">
+  <div class="sec-head">
+    <div class="num">06 / 08</div>
+    <div class="ti">Quattro <em>esperienze</em></div>
+    <div class="lede">L'ospitalità di Monte Casone si articola in quattro pilastri narrativi. Ogni soggiorno ne attraversa almeno uno; ogni comunicazione ne illumina uno solo, mai tutti insieme.</div>
+  </div>
+
+  <div class="exp">
+    <div class="num">01</div>
+    <div>
+      <h4>L'<em>esperienza</em><br/>Monte Casone</h4>
+      <div class="tags">
+        <span class="tg">Ospitalità</span>
+        <span class="tg">Concierge</span>
+        <span class="tg">Privacy</span>
+      </div>
+    </div>
+    <p>Il modo in cui si abita la tenuta: dalle colazioni con prodotti del posto al servizio discreto di concierge, dalla piscina a sfioro alle serate intorno al fuoco. La promessa è il <em>cocooning</em> — sentirsi a casa, ma in un altrove sognato.</p>
+  </div>
+
+  <div class="exp">
+    <div class="num">02</div>
+    <div>
+      <h4>Il nostro <em>olio</em><br/>d'oliva</h4>
+      <div class="tags">
+        <span class="tg">Frantoio</span>
+        <span class="tg">Pendolino · Frantoio · Moraiolo</span>
+        <span class="tg">Ottobre</span>
+      </div>
+    </div>
+    <p>Le tre cultivar che danno il nome ai nostri cottage producono l'olio della tenuta. Visite al frantoio, degustazioni guidate e — in autunno — la possibilità di partecipare alla raccolta. Il prodotto è la firma agricola della casa.</p>
+  </div>
+
+  <div class="exp">
+    <div class="num">03</div>
+    <div>
+      <h4>Scopri la <em>Toscana</em></h4>
+      <div class="tags">
+        <span class="tg">Volterra</span>
+        <span class="tg">San Gimignano</span>
+        <span class="tg">Brunello</span>
+        <span class="tg">Golf</span>
+      </div>
+    </div>
+    <p>Itinerari curati attraverso le terre etrusche, le città medievali, i vigneti più rinomati e i campi da golf della regione. Ogni proposta è un montaggio breve, mai una lista turistica esaustiva.</p>
+  </div>
+
+  <div class="exp">
+    <div class="num">04</div>
+    <div>
+      <h4>Eredità <em>toscana</em></h4>
+      <div class="tags">
+        <span class="tg">Cucina</span>
+        <span class="tg">Artigianato</span>
+        <span class="tg">Storia</span>
+      </div>
+    </div>
+    <p>I gesti, le ricette, i mestieri che hanno reso la Toscana ciò che è. Lezioni di cucina, incontri con artigiani, racconti di famiglie contadine. Il filo rosso è la trasmissione: ciò che si è ricevuto, e che si restituisce.</p>
+  </div>
+</section>
+
+<!-- PHOTOGRAPHY -->
+<section id="fotografia" data-screen-label="08 Fotografia">
+  <div class="sec-head">
+    <div class="num">07 / 08</div>
+    <div class="ti">Direzione<br/><em>fotografica</em></div>
+    <div class="lede">Luce calda, ombre morbide, mai sovraesposizione. Le persone esistono di scorcio o di spalle — il protagonista è il luogo. La saturazione resta sotto il naturale: il colore della Toscana è già intenso.</div>
+  </div>
+
+  <div class="gallery">
+    <div class="g s-1"><img src="https://montecasone.com/wp-content/uploads/2026/01/Monte_Casone_pendolino_Cottage_48.jpg" alt=""/></div>
+    <div class="g s-2"><img src="https://montecasone.com/wp-content/uploads/2026/01/monte_casone_outside_life.jpg" alt=""/></div>
+    <div class="g s-3"><img src="https://montecasone.com/wp-content/uploads/2026/01/Monte_Casone_Mansion-11.jpg" alt=""/></div>
+    <div class="g s-4"><img src="https://montecasone.com/wp-content/uploads/2026/01/Monte_Casone_Moraiolo_Cottage23-1.jpg" alt=""/></div>
+    <div class="g s-5"><img src="https://montecasone.com/wp-content/uploads/2026/01/Monte_Casone_Moraiolo_Cottage33-1.jpg" alt=""/></div>
+    <div class="g s-6"><img src="https://montecasone.com/wp-content/uploads/2026/01/monte_casone_outside88.jpg" alt=""/></div>
+    <div class="g s-7"><img src="https://montecasone.com/wp-content/uploads/2026/01/Monte_Casone_pendolino_Cottage_50.jpg" alt=""/></div>
+    <div class="g s-8"><img src="https://montecasone.com/wp-content/uploads/2026/01/monte_casone_poll40.jpg" alt=""/></div>
+    <div class="g s-9"><img src="https://montecasone.com/wp-content/uploads/2026/01/Monte_Casone_Frantoio_Cottage_43.jpg" alt=""/></div>
+  </div>
+
+  <div class="photo-rules">
+    <div class="photo-rule">
+      <div class="ix">RULE / 01</div>
+      <h5>Luce d'oro</h5>
+      <p>Riprese all'alba o dopo le 17:00. Mai mezzogiorno verticale.</p>
+    </div>
+    <div class="photo-rule">
+      <div class="ix">RULE / 02</div>
+      <h5>Niente persone in posa</h5>
+      <p>Figure di scorcio, di spalle, sfocate. Il luogo è il protagonista.</p>
+    </div>
+    <div class="photo-rule">
+      <div class="ix">RULE / 03</div>
+      <h5>Saturazione contenuta</h5>
+      <p>−5% su rossi e verdi; il paesaggio è già intenso di suo.</p>
+    </div>
+    <div class="photo-rule">
+      <div class="ix">RULE / 04</div>
+      <h5>Dettagli materici</h5>
+      <p>Pietra, ulivo, lino, ferro. Almeno un macro per ogni serie.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VOICE -->
+<section id="voce" data-screen-label="09 Voce">
+  <div class="sec-head">
+    <div class="num">08 / 08</div>
+    <div class="ti">Voce e <em>lessico</em></div>
+    <div class="lede">Una voce italiana, calda, raffinata, mai pomposa. Predilige la frase breve. Usa il "voi" cerimoniale solo in contesti istituzionali; il "tu" rispettoso nelle comunicazioni intime. Mai claim turistici.</div>
+  </div>
+
+  <div class="voice-head">
+    <div></div>
+    <div class="h-do">Si fa così · Do</div>
+    <div class="h-dont">Si evita · Don't</div>
+  </div>
+  <div class="voice-row">
+    <div class="vn">01</div>
+    <div class="vc do">Una vera oasi di pace, a due passi da Volterra.</div>
+    <div class="vc dont">Esperienza unica e indimenticabile in Toscana!</div>
+  </div>
+  <div class="voice-row">
+    <div class="vn">02</div>
+    <div class="vc do">Serate indimenticabili con un buon bicchiere di Brunello.</div>
+    <div class="vc dont">Il top dell'ospitalità italiana.</div>
+  </div>
+  <div class="voice-row">
+    <div class="vn">03</div>
+    <div class="vc do">Tre cottage. Una stessa casa.</div>
+    <div class="vc dont">Pacchetto all-inclusive con sconti speciali.</div>
+  </div>
+  <div class="voice-row">
+    <div class="vn">04</div>
+    <div class="vc do">Il luogo ideale per godersi la vita.</div>
+    <div class="vc dont">Magia, sogno, da favola, da cartolina.</div>
+  </div>
+
+  <div class="lex">
+    <div class="lex-head">
+      <div></div>
+      <div class="h-do">Dire</div>
+      <div class="h-dont">Non dire</div>
+    </div>
+    <div class="lex-row">
+      <div class="ln">Luogo</div>
+      <div class="lw">residenza · cottage · tenuta</div>
+      <div class="lw dont">struttura ricettiva · room · property</div>
+    </div>
+    <div class="lex-row">
+      <div class="ln">Persona</div>
+      <div class="lw">ospite · soggiorno</div>
+      <div class="lw dont">cliente · pacchetto · prenotazione</div>
+    </div>
+    <div class="lex-row">
+      <div class="ln">Paesaggio</div>
+      <div class="lw">colline · uliveti · pietra</div>
+      <div class="lw dont">vista panoramica mozzafiato</div>
+    </div>
+    <div class="lex-row">
+      <div class="ln">Olivicoltura</div>
+      <div class="lw">oliva · frantoio · cultivar</div>
+      <div class="lw dont">oro verde · esperienza sensoriale</div>
+    </div>
+    <div class="lex-row quote">
+      <div class="ln">Tono</div>
+      <div class="lw">"Il sole basso sugli ulivi."</div>
+      <div class="lw dont">"Una location da sogno!"</div>
+    </div>
+  </div>
+</section>
+
+
+</main>
+
+<!-- FOOTER -->
+<footer class="ft">
+  <div class="page">
+    <img src="assets/logo-white.svg" alt="Monte Casone" style="width:min(560px, 60%);height:auto;display:block;margin:0 0 64px"/>
+    <h2 class="word">la <em>dolce</em><br/>vita.</h2>
+
+    <div class="grid-ft">
+      <div>
+        <h6>Tenuta</h6>
+        <p>Monte Casone</p>
+        <p>Via di Monti, 58</p>
+        <p>I-56037 Ghizzano (PI)</p>
+        <p>Italia</p>
+      </div>
+      <div>
+        <h6>Contatto</h6>
+        <p>+39 0587 63 00 91</p>
+        <p>info@montecasone.com</p>
+      </div>
+      <div>
+        <h6>Canali</h6>
+        <p>instagram · @monte_casone</p>
+        <p>facebook · /montecasone</p>
+        <p>youtube · @montecasone8123</p>
+      </div>
+      <div>
+        <h6>Brand Hub</h6>
+        <p>Versione 1.0 · Maggio 2026</p>
+        <p>Italiano · English · Français · Deutsch</p>
+      </div>
+    </div>
+
+    <div class="colofon">
+      <span>© MMXXVI · Monte Casone</span>
+      <span>Agriturismo · di gran classe</span>
+      <span>Ghizzano · 43.6°N 10.6°E</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const I18N_KEY = 'mc-lang';
+  const I18N_CACHE_KEY = 'mc-i18n-cache-v1';
+  const LANG_NAMES = { it:'Italian', en:'English', fr:'French', de:'German' };
+  const TRANSLATE_ROOTS = ['header.topbar','main','footer'];
+  const SKIP_TAGS = new Set(['SCRIPT','STYLE','NOSCRIPT','SVG','PATH','CIRCLE']);
+
+  function isSkipped(node){
+    let p = node.parentElement;
+    while (p){
+      if (SKIP_TAGS.has(p.tagName)) return true;
+      if (p.classList && p.classList.contains('no-translate')) return true;
+      if (p.hasAttribute && p.hasAttribute('data-no-translate')) return true;
+      p = p.parentElement;
+    }
+    return false;
+  }
+
+  function collectTextNodes(){
+    const nodes = [];
+    TRANSLATE_ROOTS.forEach(sel => {
+      document.querySelectorAll(sel).forEach(root => {
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+          acceptNode(n){
+            if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+            return isSkipped(n) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
+          }
+        });
+        let n; while ((n = walker.nextNode())) nodes.push(n);
+      });
+    });
+    return nodes;
+  }
+
+  // Snapshot originals
+  const snapshot = collectTextNodes().map(node => ({ node, text: node.nodeValue }));
+  const ORIGINAL_TITLE = document.title;
+
+  function applyTexts(arr){
+    snapshot.forEach((o,i) => {
+      if (typeof arr[i] === 'string') o.node.nodeValue = arr[i];
+    });
+  }
+  function restoreOriginals(){
+    snapshot.forEach(o => o.node.nodeValue = o.text);
+  }
+
+  function loadCache(){
+    try { return JSON.parse(localStorage.getItem(I18N_CACHE_KEY) || '{}'); }
+    catch(e){ return {}; }
+  }
+  function saveCache(c){
+    try { localStorage.setItem(I18N_CACHE_KEY, JSON.stringify(c)); } catch(e){}
+  }
+
+  async function translateBatch(strings, langName){
+    const prompt =
+`You are a precise translator for a Tuscan luxury estate brand. Translate the following array of UI strings from Italian into ${langName}.
+
+RULES:
+- Return ONLY a valid JSON array of strings, same length and same order. No commentary, no code fences.
+- Keep proper nouns untranslated: Monte Casone, Ghizzano, Volterra, San Gimignano, Pisa, Toscana (translate "Toscana" to the local form: Tuscany / Toscane / Toskana), Tirreno.
+- Keep brand asset names untranslated: Cormorant Garamond, Lato, Brand Hub.
+- Keep olive cultivar names untranslated: Frantoio, Leccino, Pendolino, Moraiolo.
+- Keep Italian set-phrases like "la dolce vita" untranslated.
+- Preserve leading and trailing whitespace exactly as in the source.
+- Preserve punctuation marks like · — –.
+- If a string is just a number, version, or symbol, return it unchanged.
+- Match the elegant, editorial tone of the source.
+
+STRINGS:
+${JSON.stringify(strings)}`;
+    const res = await window.claude.complete(prompt);
+    const m = res.match(/\[[\s\S]*\]/);
+    if (!m) throw new Error('No JSON array in response');
+    const arr = JSON.parse(m[0]);
+    if (!Array.isArray(arr) || arr.length !== strings.length) throw new Error('Bad length: '+arr.length+' vs '+strings.length);
+    return arr;
+  }
+
+  async function translateAll(lang, btn){
+    if (lang === 'it'){ restoreOriginals(); document.title = ORIGINAL_TITLE; document.documentElement.lang = 'it'; return; }
+    const cache = loadCache();
+    if (cache[lang] && Array.isArray(cache[lang]) && cache[lang].length === snapshot.length){
+      applyTexts(cache[lang]);
+      if (cache[lang+'__title']) document.title = cache[lang+'__title'];
+      document.documentElement.lang = lang;
+      return;
+    }
+    btn.classList.add('is-loading');
+    const strings = snapshot.map(o => o.text);
+    const BATCH = 45;
+    const out = new Array(strings.length);
+    const slices = [];
+    for (let i = 0; i < strings.length; i += BATCH) slices.push([i, strings.slice(i, i + BATCH)]);
+    let done = 0; const total = slices.length + 1;
+    function tickProgress(){
+      done++;
+      const pct = Math.round((done/total)*100);
+      btn.setAttribute('data-progress', pct + '%');
+    }
+    try {
+      const tasks = slices.map(async ([offset, batch]) => {
+        const arr = await translateBatch(batch, LANG_NAMES[lang]);
+        // Apply this slice immediately for progressive feedback
+        for (let i = 0; i < arr.length; i++){
+          out[offset + i] = arr[i];
+          if (typeof arr[i] === 'string') snapshot[offset + i].node.nodeValue = arr[i];
+        }
+        tickProgress();
+      });
+      const titleTask = translateBatch([ORIGINAL_TITLE], LANG_NAMES[lang])
+        .then(t => { document.title = t[0] || ORIGINAL_TITLE; tickProgress(); return t[0]; })
+        .catch(() => { tickProgress(); return ORIGINAL_TITLE; });
+      const [, translatedTitle] = await Promise.all([Promise.all(tasks), titleTask]);
+      cache[lang] = out;
+      cache[lang+'__title'] = translatedTitle;
+      saveCache(cache);
+      document.documentElement.lang = lang;
+    } finally {
+      btn.classList.remove('is-loading');
+      btn.removeAttribute('data-progress');
+    }
+  }
+
+  // UI wiring
+  const btn = document.getElementById('langBtn');
+  const code = document.getElementById('langCode');
+  const menu = document.getElementById('langMenu');
+  if (!btn || !menu) return;
+
+  function setActive(lang){
+    code.textContent = lang.toUpperCase();
+    menu.querySelectorAll('button[data-lang]').forEach(b => {
+      b.setAttribute('aria-current', b.dataset.lang === lang ? 'true' : 'false');
+    });
+  }
+  function openMenu(){ menu.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+  function closeMenu(){ menu.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+
+  btn.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    if (menu.classList.contains('open')) closeMenu(); else openMenu();
+  });
+  document.addEventListener('click', (e)=>{
+    if (!menu.contains(e.target) && e.target !== btn) closeMenu();
+  });
+  document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') closeMenu(); });
+
+  menu.querySelectorAll('button[data-lang]').forEach(b => {
+    b.addEventListener('click', async ()=>{
+      const lang = b.dataset.lang;
+      closeMenu();
+      setActive(lang);
+      try { localStorage.setItem(I18N_KEY, lang); } catch(e){}
+      try { await translateAll(lang, btn); }
+      catch(err){ console.error('Translation failed', err); }
+    });
+  });
+
+  // Restore saved language
+  const saved = (function(){ try { return localStorage.getItem(I18N_KEY); } catch(e){ return null; } })();
+  const initial = saved && LANG_NAMES[saved] ? saved : 'it';
+  setActive(initial);
+  if (initial !== 'it'){
+    translateAll(initial, btn).catch(err => console.error('Initial translation failed', err));
+  }
+})();
+</script>
+
+</body>
+</html>
